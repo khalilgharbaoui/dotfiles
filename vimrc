@@ -22,10 +22,23 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>
 map <Leader>gp :Gpush<CR>
 
-" Toggle nerdtree with F10
-map <F10> :NERDTreeToggle<CR>
+" Toggle NERDtree with F10
+map <F10> :NERDTreeMirrorToggle<CR>
 " Current file in nerdtree
-map <F9> :NERDTreeFind<CR>
+map <C-\><C-\> :NERDTreeTabsFind<CR>
+"or
+map <F9> :NERDTreeTabsFind<CR>
+
+" NERDtreetabs config
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_autofind=1
+let g:nerdtree_tabs_smart_startup_focus=1
+let g:nerdtree_tabs_no_startup_for_diff=0
+let g:nerdtree_tabs_startup_cd=1
+let g:nerdtree_tabs_autoclose=1
+
 
 " Reduce timeout after <ESC> is recvd. This is only a good idea on fast links.
 set ttimeout
@@ -120,8 +133,8 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
-" let g:airline_theme='powerlineish'
-let g:airline_theme = 'tomorrow'
+let g:airline_theme='powerlineish'
+" let g:airline_theme = 'tomorrow'
 set t_Co=256
 
 :set smartcase
@@ -131,8 +144,9 @@ set t_Co=256
 " Color scheme
 "colorscheme solarized
 " colorscheme tomorrow-night
-colorscheme tomorrow
-set background=light
+" colorscheme tomorrow
+colorscheme onedark
+highlight Normal ctermfg=grey ctermbg=black
 set encoding=utf-8
 
 " Highlight line number of where cursor currently is
