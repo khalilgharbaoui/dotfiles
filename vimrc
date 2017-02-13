@@ -1,6 +1,20 @@
+" Custom vim hook
+augroup my_vimrc_hooks
+      au!
+          au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
+
+set encoding=utf-8
+
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
+
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
+
+" Always show statusline
+set laststatus=2
 
 set shell=/bin/bash
 runtime macros/matchit.vim
@@ -22,6 +36,7 @@ map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit<CR>
 map <Leader>gp :Gpush<CR>
 
+
 " Toggle NERDtree with F10
 map <F10> :NERDTreeMirrorToggle<CR>
 " Current file in nerdtree
@@ -39,6 +54,89 @@ let g:nerdtree_tabs_no_startup_for_diff=0
 let g:nerdtree_tabs_startup_cd=1
 let g:nerdtree_tabs_autoclose=1
 
+" Force extra padding in NERDTree so that the filetype icons line up vertically
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+" loading the plugin
+let g:webdevicons_enable = 1
+" adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" adding the custom source to unite
+let g:webdevicons_enable_unite = 1
+" adding the column to vimfiler
+let g:webdevicons_enable_vimfiler = 1
+" adding to vim-airline's tabline
+let g:webdevicons_enable_airline_tabline = 1
+" adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
+" ctrlp glyphs
+let g:webdevicons_enable_ctrlp = 1
+" adding to flagship's statusline
+let g:webdevicons_enable_flagship_statusline = 1
+" turn on/off file node glyph decorations (not particularly useful)
+let g:WebDevIconsUnicodeDecorateFileNodes = 1
+" use double-width(1) or single-width(0) glyphs
+" only manipulates padding, has no effect on terminal or set(guifont) font
+" let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+" whether or not to show the nerdtree brackets around flags
+let g:webdevicons_conceal_nerdtree_brackets = 1
+" the amount of space to use after the glyph character (default ' ')
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
+let g:NERDTreeDirArrows=0
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" let g:WebDevIconsUnicodeDecorateFolderNodeDefaultSymbol = ''
+
+" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nerdtree'] = ''
+" ---
+" let g:NERDTreeDisableFileExtensionHighlight = 0
+" let g:NERDTreeDisableExactMatchHighlight = 0
+" let g:NERDTreeDisablePatternMatchHighlight = 0
+" let g:NERDTreeFileExtensionHighlightFullName = 0
+" let g:NERDTreeExactMatchHighlightFullName = 0
+" let g:NERDTreePatternMatchHighlightFullName = 0
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+" you can add these colors to your .vimrc to help customizing
+" let s:brown = "905532"
+" let s:aqua =  "3AFFDB"
+" let s:blue = "689FB6"
+" let s:darkBlue = "44788E"
+" let s:purple = "834F79"
+" let s:lightPurple = "834F79"
+" let s:red = "AE403F"
+" let s:beige = "F5C06F"
+" let s:yellow = "F09F17"
+" let s:orange = "D4843E"
+" let s:darkOrange = "F16529"
+" let s:pink = "CB6F6F"
+" let s:salmon = "EE6E73"
+" let s:green = "8FAA54"
+" let s:lightGreen = "31B53E"
+" let s:white = "FFFFFF"
+" let s:rspec_red = 'FE405F'
+" let s:git_orange = 'F54D27'
+
+" let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreeExtensionHighlightColor['css'] = s:blue " sets the color of css files to blue
+" let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+" let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
+" let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets the color for files ending with _spec.rb
+" If you have vim-devicons you can customize your icons for each file type.
+" let g:NERDTreeExtensionHighlightColor = {} "this line is needed to avoid error
+" let g:NERDTreeExtensionHighlightColor['css'] = '' "assigning it to an empty string will skip highlight
+" ---
 
 " Reduce timeout after <ESC> is recvd. This is only a good idea on fast links.
 set ttimeout
@@ -120,15 +218,16 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-let g:rspec_command = 'call Send_to_Tmux("bundle exec spring rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
 let g:mocha_js_command = 'call Send_to_Tmux("mocha --opts spec/javascripts/mocha.opts {spec}\n")'
 let g:rspec_runner = "os_x_iterm"
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
-
 " Airline
+" required if using https://github.com/bling/vim-airline
 let g:airline_powerline_fonts = 1
+
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -147,7 +246,6 @@ set t_Co=256
 " colorscheme tomorrow
 colorscheme onedark
 highlight Normal ctermfg=grey ctermbg=black
-set encoding=utf-8
 
 " Highlight line number of where cursor currently is
 hi CursorLineNr guifg=#050505
@@ -260,7 +358,7 @@ set clipboard^=unnamed
 let g:no_turbux_mappings = 1
 map <leader>t <Plug>SendTestToTmux
 map <leader>s <Plug>SendFocusedTestToTmux
-let g:turbux_command_rspec = 'bundle exec spring rspec'
+let g:turbux_command_rspec = 'bundle exec rspec'
 
 " Command aliases for typoed commands (accidentally holding shift too long)
 command! W w
